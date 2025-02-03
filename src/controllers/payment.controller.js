@@ -21,8 +21,8 @@ export const createOrder = async (req, res) => {
 /*          success: 'http://localhost:5173/descripcion-cartas?status=success',
          failure: 'http://localhost:5173/welcome?status=failure' */
          // Numerología
-     /*  success: 'http://localhost:5173/result?status=success',
-        failure: 'http://localhost:5173/welcome?status=failure', */
+      success: 'https://api.numerologiacolombia.com/result?status=success',
+        failure: 'https://api.numerologiacolombia.com/welcome?status=failure',
       },
       notification_url: 'https://44c3-181-129-218-198.ngrok-free.app/weebhook',
       payment_methods: {
@@ -53,3 +53,5 @@ export const recieveWebhook = async (req, res) => {
   } catch (error) {
     console.error('Error handling webhook:', error);
     res.status(500).send('Error handling webhook');
+  }
+}
