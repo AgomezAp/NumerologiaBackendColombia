@@ -1,0 +1,55 @@
+import {
+  MercadoPagoConfig,
+  Preference,
+} from 'mercadopago';
+
+const client = new MercadoPagoConfig({ accessToken: 'APP_USR-2354277609616810-012411-e940f673ad901030cc3c18527195debe-2043624902' });
+const preference = new Preference(client);
+export const createOrder = async (req, res) => {
+ const result= await preference.create({
+    body: {
+      items: [
+        {
+          id: '1',
+          title: 'Lectura de cartas Tarot',
+          quantity: 1,
+          unit_price: 1000
+        }
+      ],
+      back_urls:{
+        // Tarot
+/*          success: 'http://localhost:5173/descripcion-cartas?status=success',
+         failure: 'http://localhost:5173/welcome?status=failure' */
+         // Numerología
+     /*  success: 'http://localhost:5173/result?status=success',
+        failure: 'http://localhost:5173/welcome?status=failure', */
+      },
+      notification_url: 'https://44c3-181-129-218-198.ngrok-free.app/weebhook',
+      payment_methods: {
+        excluded_payment_methods: [
+          {
+            id: 'efecty'
+          }
+        ],
+        installments: 3
+
+      },
+      auto_return: 'approved',
+
+
+    }
+  })
+  console.log(result);
+   res.send(result)
+  };
+
+export const recieveWebhook = async (req, res) => {
+  try {
+    console.log('Webhook received:', req.body);
+    // Mostrar todos los datos que llegan
+    console.log('All received data:', req.body);
+
+    res.status(200).send('Webhook received');
+  } catch (error) {
+    console.error('Error handling webhook:', error);
+    res.status(500).send('Error handling webhook');
