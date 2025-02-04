@@ -17,16 +17,12 @@ export const createOrder = async (req, res) => {
         items: [
           {
             id: "1",
-            title: "Lectura de cartas Tarot",
+            title: "Número de la suerte",
             quantity: 1,
-            unit_price: 15000,
+            unit_price: 6000,
           },
         ],
         back_urls: {
-          // Tarot
-          /*          success: 'http://localhost:5173/descripcion-cartas?status=success',
-         failure: 'http://localhost:5173/welcome?status=failure' */
-          // Numerología
           success: "https://numerologiacolombia.com/result?status=success",
           failure: "https://numerologiacolombia.com/welcome?status=failure",
         },
