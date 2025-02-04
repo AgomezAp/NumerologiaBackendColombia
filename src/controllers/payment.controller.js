@@ -1,5 +1,8 @@
-import dotenv from "dotenv";
-import { MercadoPagoConfig, Preference } from "mercadopago";
+import dotenv from 'dotenv';
+import {
+  MercadoPagoConfig,
+  Preference,
+} from 'mercadopago';
 
 dotenv.config();
 
@@ -16,7 +19,7 @@ export const createOrder = async (req, res) => {
             id: "1",
             title: "Lectura de cartas Tarot",
             quantity: 1,
-            unit_price: 1000,
+            unit_price: 15000,
           },
         ],
         back_urls: {
