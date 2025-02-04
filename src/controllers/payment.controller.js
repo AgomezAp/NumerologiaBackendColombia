@@ -1,57 +1,62 @@
-import {
-  MercadoPagoConfig,
-  Preference,
-} from 'mercadopago';
+import dotenv from "dotenv";
+import { MercadoPagoConfig, Preference } from "mercadopago";
 
-const client = new MercadoPagoConfig({ accessToken: 'APP_USR-2354277609616810-012411-e940f673ad901030cc3c18527195debe-2043624902' });
+dotenv.config();
+
+const client = new MercadoPagoConfig({
+  accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN,
+});
 const preference = new Preference(client);
 export const createOrder = async (req, res) => {
- const result= await preference.create({
-    body: {
-      items: [
-        {
-          id: '1',
-          title: 'Lectura de cartas Tarot',
-          quantity: 1,
-          unit_price: 1000
-        }
-      ],
-      back_urls:{
-        // Tarot
-/*          success: 'http://localhost:5173/descripcion-cartas?status=success',
-         failure: 'http://localhost:5173/welcome?status=failure' */
-         // Numerología
-      success: 'https://numerologiacolombia.com/result?status=success',
-        failure: 'https://numerologiacolombia.com/welcome?status=failure',
-      },
-      notification_url: 'https://44c3-181-129-218-198.ngrok-free.app/weebhook',
-      payment_methods: {
-        excluded_payment_methods: [
+  try {
+    const result = await preference.create({
+      body: {
+        items: [
           {
-            id: 'efecty'
-          }
+            id: "1",
+            title: "Lectura de cartas Tarot",
+            quantity: 1,
+            unit_price: 1000,
+          },
         ],
-        installments: 3
-
+        back_urls: {
+          // Tarot
+          /*          success: 'http://localhost:5173/descripcion-cartas?status=success',
+         failure: 'http://localhost:5173/welcome?status=failure' */
+          // Numerología
+          success: "https://numerologiacolombia.com/result?status=success",
+          failure: "https://numerologiacolombia.com/welcome?status=failure",
+        },
+        notification_url:
+          "https://44c3-181-129-218-198.ngrok-free.app/weebhook",
+        payment_methods: {
+          excluded_payment_methods: [
+            {
+              id: "efecty",
+            },
+          ],
+          installments: 3,
+        },
+        auto_return: "approved",
       },
-      auto_return: 'approved',
-
-
-    }
-  })
-  console.log(result);
-   res.send(result)
-  };
+    });
+    console.log(result);
+    res.send(result);
+  } catch (error) {
+    console.error("Error creating order:", error);
+    res.status(500).send({ error: "Error creating order" });
+  }
+};
 
 export const recieveWebhook = async (req, res) => {
   try {
-    console.log('Webhook received:', req.body);
+    console.log("Webhook received:", req.body);
     // Mostrar todos los datos que llegan
-    console.log('All received data:', req.body);
+    console.log("All received data:", req.body);
 
-    res.status(200).send('Webhook received');
+    res.status(200).send("Webhook received");
   } catch (error) {
-    console.error('Error handling webhook:', error);
-    res.status(500).send('Error handling webhook');
+    console.error("Error handling webhook:", error);
+    res.status(500).send("Error handling webhook");
   }
-}
+};
