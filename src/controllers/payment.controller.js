@@ -19,7 +19,7 @@ export const createOrder = async (req, res) => {
             id: "1",
             title: "Número de la suerte",
             quantity: 1,
-            unit_price: 6000,
+            unit_price: 15000,
           },
         ],
         back_urls: {
@@ -33,26 +33,22 @@ export const createOrder = async (req, res) => {
             {
               id: "efecty",
             },
+            {
+              id: "pse",
+            }
           ],
           installments: 3,
         },
         auto_return: "approved",
       },
     });
-    console.log(result);
-    res.send(result);
   } catch (error) {
-    console.error("Error creating order:", error);
     res.status(500).send({ error: "Error creating order" });
   }
 };
 
 export const recieveWebhook = async (req, res) => {
   try {
-    console.log("Webhook received:", req.body);
-    // Mostrar todos los datos que llegan
-    console.log("All received data:", req.body);
-
     res.status(200).send("Webhook received");
   } catch (error) {
     console.error("Error handling webhook:", error);
