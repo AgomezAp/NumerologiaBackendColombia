@@ -42,13 +42,20 @@ export const createOrder = async (req, res) => {
         auto_return: "approved",
       },
     });
+    console.log(result);
+    res.send(result);
   } catch (error) {
+    console.error("Error creating order:", error);
     res.status(500).send({ error: "Error creating order" });
   }
 };
 
 export const recieveWebhook = async (req, res) => {
   try {
+    console.log("Webhook received:", req.body);
+    // Mostrar todos los datos que llegan
+    console.log("All received data:", req.body);
+
     res.status(200).send("Webhook received");
   } catch (error) {
     console.error("Error handling webhook:", error);
